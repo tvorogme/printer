@@ -17,6 +17,6 @@ padx = 3
 pady = 1  # on css words = margin
 bd = 1  # ???
 
-x_padding = (16, 0)
+x_padding = (20, 0)
 
 default = 'Фамилия Имя'
