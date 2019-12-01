@@ -2,7 +2,7 @@ import subprocess
 import tkinter
 from tkinter import font, Entry, Label
 
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFont
 
 from config import *
 
@@ -116,7 +116,8 @@ class Printer(tkinter.Tk):
         img = Image.new('RGB', (109, 336), color=(255, 255, 255))
 
         d = ImageDraw.Draw(img)
-        d.text((10, 10), self.field.get(), fill=(0, 0, 0))
+        font = ImageFont.truetype('./Ubuntu-Regular.ttf')
+        d.text((10, 10), self.field.get(), fill=(0, 0, 0), font=font)
 
         img.save('test.png')
 
