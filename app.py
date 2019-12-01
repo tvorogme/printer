@@ -33,7 +33,7 @@ class Printer(tkinter.Tk):
             elif cur_row == 3:
                 columnspan = 2
             elif cur_row == 4:
-                columnspan = 4
+                columnspan = 2
 
             button = tkinter.Button(self, text=button,
                                     height=button_height,
@@ -62,7 +62,7 @@ class Printer(tkinter.Tk):
             elif cur_column > 10 and cur_row == 3:
                 cur_column = 0
                 cur_row += 1
-            elif cur_column > 8 and cur_row == 4:
+            elif cur_column > 10 and cur_row == 4:
                 big = True
                 cur_row += 1
                 cur_column = 0
