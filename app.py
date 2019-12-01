@@ -15,7 +15,7 @@ class Printer(tkinter.Tk):
 
         self.field = Entry(self, width=33)
         self.field.insert(0, 'Фамилия Имя')
-        self.field.grid(row=1, columnspan=16, pady=(100, 30), padx=(11, 0))
+        self.field.grid(row=1, columnspan=16, pady=(30, 10), padx=(3, 0))
 
         self.draw_keyboard()
         self.change()
@@ -36,6 +36,7 @@ class Printer(tkinter.Tk):
                 columnspan = 4
 
             button = tkinter.Button(self, text=button,
+                                    height=2,
                                     width=button_size if not big else big_button_size,
                                     bg=bg_color,
                                     fg=fg_color,
@@ -50,7 +51,7 @@ class Printer(tkinter.Tk):
             button.grid(row=cur_row,
                         column=cur_column,
                         columnspan=columnspan,
-                        padx=0 if not cur_column == 0 else (11, 0)
+                        padx=0 if not cur_column == 0 else (3, 0)
                         )
 
             cur_column += 1 if not big else 3

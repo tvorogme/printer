@@ -12,7 +12,7 @@ fg_active_color = bg_color
 
 button_size = 3
 big_button_size = 9
-padx = 1
+padx = 3
 pady = 1  # on css words = margin
 bd = 1  # ???
 
