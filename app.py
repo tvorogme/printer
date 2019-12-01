@@ -10,12 +10,12 @@ class Printer(tkinter.Tk):
         self.buttons = []
         self.upper = False
 
-        new_font = font.Font(family="dejavu sans", size=22)
+        new_font = font.Font(family="dejavu sans", size=20)
         self.option_add("*Font", new_font)
 
         self.field = Entry(self, width=33)
         self.field.insert(0, 'Фамилия Имя')
-        self.field.grid(row=1, columnspan=16, pady=(30, 10), padx=(3, 0))
+        self.field.grid(row=1, columnspan=16, pady=(30, 10), padx=(7, 0))
 
         self.draw_keyboard()
         self.change()
@@ -29,14 +29,14 @@ class Printer(tkinter.Tk):
             columnspan = 1
 
             if big:
-                columnspan = 6
+                columnspan = 3
             elif cur_row == 3:
                 columnspan = 2
             elif cur_row == 4:
                 columnspan = 4
 
             button = tkinter.Button(self, text=button,
-                                    height=2,
+                                    height=button_height,
                                     width=button_size if not big else big_button_size,
                                     bg=bg_color,
                                     fg=fg_color,
@@ -51,7 +51,7 @@ class Printer(tkinter.Tk):
             button.grid(row=cur_row,
                         column=cur_column,
                         columnspan=columnspan,
-                        padx=0 if not cur_column == 0 else (3, 0)
+                        padx=0 if not cur_column == 0 else (7, 0)
                         )
 
             cur_column += 1 if not big else 3
@@ -100,5 +100,5 @@ class Printer(tkinter.Tk):
 
 if __name__ == '__main__':
     app = Printer()
-    app.geometry("800x480")
+    app.geometry("770x480")
     app.mainloop()
