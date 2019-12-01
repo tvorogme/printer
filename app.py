@@ -13,9 +13,9 @@ class Printer(tkinter.Tk):
         new_font = font.Font(family="dejavu sans", size=20)
         self.option_add("*Font", new_font)
 
-        self.field = Entry(self, width=33)
+        self.field = Entry(self, width=30, font=font.Font(family="dejavu sans", size=30))
         self.field.insert(0, 'Фамилия Имя')
-        self.field.grid(row=1, columnspan=16, pady=(30, 10), padx=x_padding)
+        self.field.grid(row=1, columnspan=16, pady=(10, 10), padx=x_padding)
 
         self.draw_keyboard()
         self.change()
