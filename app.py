@@ -1,70 +1,103 @@
 import tkinter
 from tkinter import font, Entry
 
-master = tkinter.Tk()
-master.geometry("800x480")
-font = font.Font(family="dejavu sans", size=20)
-master.option_add("*Font", font)
-
-buttons = [
-    'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ', 'СТЕРЕТЬ',
-    'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э', 'SHIFT',
-    'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', 'ПРОБЕЛ',
-]
-
-bg_color = '#3c4987'
-fg_color = '#ffffff'
-active_color = fg_color
-fg_active_color = bg_color
-
-button_size = 3
-big_button_size = 6
-padx = 1
-pady = 1  # on css words = margin
-bd = 1  # ???
+from config import *
 
 
-def select(value):
-    if value == "BACK":
-        field.delete(len(field.get()) - 1, tkinter.END)
+class Printer(tkinter.Tk):
+    def __init__(self):
+        tkinter.Tk.__init__(self)
+        self.buttons = []
+        self.upper = False
 
-    elif value == "SPACE":
-        field.insert(tkinter.END, ' ')
-    elif value == " Tab ":
-        field.insert(tkinter.END, '    ')
-    else:
-        field.insert(tkinter.END, value)
+        new_font = font.Font(family="dejavu sans", size=22)
+        self.option_add("*Font", new_font)
 
+        self.field = Entry(self, width=33)
+        self.field.insert(0, 'Фамилия Имя')
+        self.field.grid(row=1, columnspan=16, pady=(100, 30), padx=(22, 0))
 
-def keyboard_draw():
-    cur_row = 2
-    varColumn = 0
+        self.draw_keyboard()
+        self.change()
 
-    for button in buttons:
-        command = lambda x=button: select(x)
+    def draw_keyboard(self):
+        cur_row = 2
+        cur_column = 0
+        big = False
 
-        button = tkinter.Button(master, text=button, width=button_size, bg=bg_color, fg=fg_color,
-                                activebackground=active_color, activeforeground=fg_active_color, relief='raised',
-                                padx=padx,
-                                pady=pady, bd=bd, command=command).grid(row=cur_row, column=varColumn)
+        for button in buttons:
+            columnspan = 1
 
-        varColumn += 1
+            if big:
+                columnspan = 6
+            elif cur_row == 3:
+                columnspan = 2
+            elif cur_row == 4:
+                columnspan = 4
 
-        if varColumn > 12 and cur_row == 2:
-            varColumn = 0
-            cur_row += 1
-        if varColumn > 11 and cur_row == 3:
-            varColumn = 0
-            cur_row += 1
+            button = tkinter.Button(self, text=button,
+                                    width=button_size if not big else big_button_size,
+                                    bg=bg_color,
+                                    fg=fg_color,
+                                    activebackground=active_color,
+                                    activeforeground=fg_active_color,
+                                    relief='raised',
+                                    padx=padx,
+                                    pady=pady,
+                                    bd=bd,
+                                    command=lambda x=button: self.select(x))
+            self.buttons.append(button)
+            button.grid(row=cur_row,
+                        column=cur_column,
+                        columnspan=columnspan,
+                        padx=0 if not cur_column == 0 else (22, 0)
+                        )
+
+            cur_column += 1 if not big else 3
+
+            if cur_column > 11 and cur_row == 2:
+                cur_column = 0
+                cur_row += 1
+            elif cur_column > 10 and cur_row == 3:
+                cur_column = 0
+                cur_row += 1
+            elif cur_column > 8 and cur_row == 4:
+                big = True
+                cur_row += 1
+                cur_column = 0
+
+    def select(self, value):
+        if value == "СТЕРЕТЬ":
+            self.field.delete(len(self.field.get()) - 1, tkinter.END)
+
+        elif value == "ПРОБЕЛ":
+            self.field.insert(tkinter.END, ' ')
+            self.change()
+
+        elif value == 'ЗАГЛАВН':
+            self.change()
+
+        else:
+            if self.field.get() == default:
+                self.field.delete(0, tkinter.END)
+
+            self.field.insert(tkinter.END, value if not self.upper else value.upper())
+
+            if self.upper:
+                self.change()
+
+    def change(self):
+        if self.upper:
+            method = 'lower'
+        else:
+            method = 'upper'
+        for i in range(32):
+            self.buttons[i]["text"] = getattr(self.buttons[i]["text"], method)()
+
+        self.upper = not self.upper
 
 
 if __name__ == '__main__':
-    master.resizable(0, 0)
-
-    global field
-
-    field = Entry(master, width=50)
-    field.insert(0, 'username')
-
-    keyboard_draw()
-    master.mainloop()
+    app = Printer()
+    app.geometry("800x480")
+    app.mainloop()
