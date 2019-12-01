@@ -113,21 +113,27 @@ class Printer(tkinter.Tk):
     def print(self):
         # Step 1 - generate needed SVG
 
-        W = 790
-        H = 400
+        W = 1052
+        H = 308
+        padding = 80
 
         text = self.field.get()
+
+        text = list(reversed(text.split()))
 
         img = Image.new('RGB', (W, H), color=(255, 255, 255))
 
         font = ImageFont.truetype('./Ubuntu-Regular.ttf', 80)
 
         d = ImageDraw.Draw(img)
-        w, h = d.textsize(text, font=font)
 
-        d.text(((W - w) / 2, (H - h) / 2), text, font=font, fill=(0, 0, 0))
+        for i, phrase in enumerate(text):
+            w, h = d.textsize(phrase, font=font)
+            d.text(((W - w) / 2, ((H - h) / 2 + len(text) * padding / 2) - (padding * i)), phrase, font=font,
+                   fill=(0, 0, 0))
 
         img = img.transpose(Image.ROTATE_90)
+
         img.save('test.png')
 
         # Step 3 - print
