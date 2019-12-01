@@ -1,6 +1,6 @@
 import tkinter
 from tkinter import font, Entry
-
+import subprocess
 from config import *
 
 
@@ -78,6 +78,12 @@ class Printer(tkinter.Tk):
         elif value == 'ЗАГЛАВН':
             self.change()
 
+        elif value == 'ПЕЧАТЬ':
+            self.print()
+
+            self.field.delete(0, tkinter.END)
+            self.field.insert(tkinter.END, 'Фамилия Имя')
+
         else:
             if self.field.get() == default:
                 self.field.delete(0, tkinter.END)
@@ -97,6 +103,22 @@ class Printer(tkinter.Tk):
 
         self.upper = not self.upper
 
+    def print(self):
+        # Step 1 - generate needed SVG
+
+        with open('template.svg') as f:
+            svg = f.read().replace('Check this out', self.field.get())
+
+        with open('template_out.svg', 'w') as f:
+            f.write(svg)
+
+        # Step 2 - convert to postscript
+
+        subprocess.check_output('inkscape template_out.svg --export-ps=template_out.ps', shell=True)
+
+        # Step 3 - print
+
+        subprocess.check_output('lpr -o landscape -o PageSize=w10h10 template_out.ps', shell=True)
 
 if __name__ == '__main__':
     app = Printer()
