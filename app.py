@@ -3,7 +3,6 @@ from tkinter import font, Entry
 
 from config import *
 
-x_padding = 11
 
 class Printer(tkinter.Tk):
     def __init__(self):
@@ -16,7 +15,7 @@ class Printer(tkinter.Tk):
 
         self.field = Entry(self, width=33)
         self.field.insert(0, 'Фамилия Имя')
-        self.field.grid(row=1, columnspan=16, pady=(30, 10), padx=(x_padding, 0))
+        self.field.grid(row=1, columnspan=16, pady=(30, 10), padx=x_padding)
 
         self.draw_keyboard()
         self.change()
@@ -52,7 +51,7 @@ class Printer(tkinter.Tk):
             button.grid(row=cur_row,
                         column=cur_column,
                         columnspan=columnspan,
-                        padx=0 if not cur_column == 0 else (x_padding, 0)
+                        padx=0 if not cur_column == 0 else x_padding
                         )
 
             cur_column += 1 if not big else 3
