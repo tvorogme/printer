@@ -1,7 +1,8 @@
 import subprocess
-import threading
 import tkinter
-from tkinter import font, Entry, Label, INSERT
+from tkinter import font, Entry, Label
+
+from PIL import Image, ImageDraw
 
 from config import *
 
@@ -69,7 +70,6 @@ class Printer(tkinter.Tk):
                 cur_row += 1
                 cur_column = 0
 
-
     def select(self, value):
         if value == "СТЕРЕТЬ":
             self.field.delete(len(self.field.get()) - 1, tkinter.END)
@@ -113,19 +113,16 @@ class Printer(tkinter.Tk):
     def print(self):
         # Step 1 - generate needed SVG
 
-        with open('template.svg') as f:
-            svg = f.read().replace('Check this out', self.field.get())
+        img = Image.new('RGB', (109, 336), color=(255, 255, 255))
 
-        with open('template_out.svg', 'w') as f:
-            f.write(svg)
+        d = ImageDraw.Draw(img)
+        d.text((10, 10), self.field.get(), fill=(0, 0, 0))
 
-        # Step 2 - convert to postscript
-
-        subprocess.check_output('inkscape template_out.svg --export-ps=template_out.ps', shell=True)
+        img.save('test.png')
 
         # Step 3 - print
 
-        subprocess.check_output('lpr -o landscape -o PageSize=w10h10 template_out.ps', shell=True)
+        subprocess.check_output('lpr -o ppi=300 -o PageSize=w10h10 -o PrintQuality=Graphics test.png', shell=True)
 
         self.progress_dialog.destroy()
 
