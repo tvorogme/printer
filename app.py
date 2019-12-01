@@ -1,6 +1,8 @@
-import tkinter
-from tkinter import font, Entry
 import subprocess
+import threading
+import tkinter
+from tkinter import font, Entry, Label, INSERT
+
 from config import *
 
 
@@ -67,6 +69,7 @@ class Printer(tkinter.Tk):
                 cur_row += 1
                 cur_column = 0
 
+
     def select(self, value):
         if value == "СТЕРЕТЬ":
             self.field.delete(len(self.field.get()) - 1, tkinter.END)
@@ -79,6 +82,10 @@ class Printer(tkinter.Tk):
             self.change()
 
         elif value == 'ПЕЧАТЬ':
+            self.progress_dialog = tkinter.Toplevel()
+            text = Label(self.progress_dialog, text='Идет печать')
+            text.pack()
+
             self.print()
 
             self.field.delete(0, tkinter.END)
@@ -119,6 +126,9 @@ class Printer(tkinter.Tk):
         # Step 3 - print
 
         subprocess.check_output('lpr -o landscape -o PageSize=w10h10 template_out.ps', shell=True)
+
+        self.progress_dialog.destroy()
+
 
 if __name__ == '__main__':
     app = Printer()
