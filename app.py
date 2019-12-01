@@ -100,5 +100,5 @@ class Printer(tkinter.Tk):
 
 if __name__ == '__main__':
     app = Printer()
-    app.geometry("770x480")
+    app.geometry("800x480")
     app.mainloop()
