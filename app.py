@@ -133,7 +133,7 @@ class Printer(tkinter.Tk):
     def print(self):
         # Step 1 - generate needed SVG
 
-        W = 1070
+        W = 1100
         H = 310
         padding = 80
 
