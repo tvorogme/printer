@@ -1,9 +1,6 @@
 import os
 import tkinter
 from tkinter import font, Entry, Label
-
-from PIL import Image, ImageDraw, ImageFont
-
 from config import *
 
 
@@ -131,13 +128,15 @@ class Printer(tkinter.Tk):
         self.upper = not self.upper
 
     def print(self):
+        from PIL import Image, ImageDraw, ImageFont
+
         # Step 1 - generate needed SVG
 
         self.text['text'] = 'Создаем 1'
         W = 1172
 
         self.text['text'] = 'Создаем 2'
-        H = 350.5
+        H = 350
 
         self.text['text'] = 'Создаем 3'
         padding = 80
