@@ -139,14 +139,18 @@ class Printer(tkinter.Tk):
         H = 308
         padding = 80
 
+        self.text['text'] = 'Достаем значение'
         text = self.field.get()
 
         text = list(reversed(text.split()))
 
+        self.text['text'] = 'Создаем'
         img = Image.new('RGB', (W, H), color=(255, 255, 255))
 
-        font = ImageFont.truetype('./Ubuntu-Regular.ttf', 80)
+        # TODO: do not hardcode path
+        font = ImageFont.truetype('/home/pi/printer/Ubuntu-Regular.ttf', 80)
 
+        self.text['text'] = 'Рисуем'
         d = ImageDraw.Draw(img)
 
         for i, phrase in enumerate(text):
