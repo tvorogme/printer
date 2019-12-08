@@ -1,6 +1,9 @@
 import os
 import tkinter
 from tkinter import font, Entry, Label
+
+from PIL import Image, ImageDraw, ImageFont
+
 from config import *
 
 
@@ -128,49 +131,36 @@ class Printer(tkinter.Tk):
         self.upper = not self.upper
 
     def print(self):
-        from PIL import Image, ImageDraw, ImageFont
-
         # Step 1 - generate needed SVG
 
-        self.text['text'] = 'Создаем 1'
-        W = 1172
-
-        self.text['text'] = 'Создаем 2'
-        H = 350
-
-        self.text['text'] = 'Создаем 3'
+        W = 1070
+        H = 310
         padding = 80
 
-        self.text['text'] = 'Создаем 4'
         text = self.field.get()
 
-        self.text['text'] = 'Создаем 5'
         text = list(reversed(text.split()))
 
-        self.text['text'] = 'Создаем 6'
+        self.text['text'] = 'Создаем'
         img = Image.new('RGB', (W, H), color=(255, 255, 255))
 
-        self.text['text'] = 'Создаем 7'
         # TODO: do not hardcode path
         font = ImageFont.truetype('Ubuntu-Regular.ttf', 80)
 
         self.text['text'] = 'Рисуем'
         d = ImageDraw.Draw(img)
 
-        self.text['text'] = 'Рисуем 1'
         for i, phrase in enumerate(text):
             w, h = d.textsize(phrase, font=font)
             d.text(((W - w) / 2, ((H - h) / 2 + len(text) * padding / 2) - (padding * i)), phrase, font=font,
                    fill=(0, 0, 0))
 
-        self.text['text'] = 'Рисуем 2'
         img = img.transpose(Image.ROTATE_90)
 
-        self.text['text'] = 'Рисуем 3'
         img.save('/tmp/test.png')
 
         # Step 3 - print
-        self.text['text'] = 'Отдыхаем'
+
         os.popen('lpr -o ppi=300 -o PageSize=w10h10 -o PrintQuality=Graphics /tmp/test.png')
 
         self.progress_dialog.destroy()
