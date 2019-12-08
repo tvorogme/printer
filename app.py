@@ -79,7 +79,7 @@ class Printer(tkinter.Tk):
             if len(self.field.get()) == 0:
                 self.field.insert(tkinter.END, 'Фамилия Имя')
                 self.change()
-                
+
         elif value == "ПРОБЕЛ":
             self.field.insert(tkinter.END, ' ')
             self.change()
@@ -88,19 +88,6 @@ class Printer(tkinter.Tk):
             self.change()
 
         elif value == 'ПЕЧАТЬ':
-            self.progress_dialog = tkinter.Toplevel()
-            self.text = Label(self.progress_dialog, text='Идет печать')
-            self.text.pack()
-
-            self.print()
-
-            self.field.delete(0, tkinter.END)
-            self.field.insert(tkinter.END, 'Фамилия Имя')
-
-        else:
-            if self.field.get() == default:
-                self.field.delete(0, tkinter.END)
-
             if self.field.get() == 'слизерин':
                 self.progress_dialog = tkinter.Toplevel()
                 text = Label(self.progress_dialog, text='Добро пожаловать')
@@ -111,6 +98,20 @@ class Printer(tkinter.Tk):
                 # start keyboard
                 subprocess.check_output('florence &', shell=True)
                 subprocess.check_output('xfce4-terminal &', shell=True)
+            else:
+                self.progress_dialog = tkinter.Toplevel()
+                self.text = Label(self.progress_dialog, text='Идет печать')
+                self.text.pack()
+
+                self.print()
+
+                self.field.delete(0, tkinter.END)
+                self.field.insert(tkinter.END, 'Фамилия Имя')
+
+        else:
+            if self.field.get() == default:
+                self.field.delete(0, tkinter.END)
+
 
             self.field.insert(tkinter.END, value if not self.upper else value.upper())
 
