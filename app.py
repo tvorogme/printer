@@ -136,7 +136,7 @@ class Printer(tkinter.Tk):
         self.text['text'] = 'Создание фотографии'
 
         W = 1052
-        H = 308
+        H = 350.5
         padding = 80
 
         self.text['text'] = 'Достаем значение'
