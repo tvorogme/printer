@@ -95,6 +95,13 @@ class Printer(tkinter.Tk):
             if self.field.get() == default:
                 self.field.delete(0, tkinter.END)
 
+            if self.field.get() == 'слизерин':
+                import subprocess
+
+                # start keyboard
+                subprocess.check_output('florence &', shell=True)
+                subprocess.check_output('xfce4-terminal &', shell=True)
+
             self.field.insert(tkinter.END, value if not self.upper else value.upper())
 
             if self.upper:
@@ -105,7 +112,7 @@ class Printer(tkinter.Tk):
             method = 'lower'
         else:
             method = 'upper'
-        for i in range(32):
+        for i in range(34):
             self.buttons[i]["text"] = getattr(self.buttons[i]["text"], method)()
 
         self.upper = not self.upper
