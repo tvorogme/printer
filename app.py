@@ -93,11 +93,11 @@ class Printer(tkinter.Tk):
                 text = Label(self.progress_dialog, text='Добро пожаловать')
                 text.pack()
 
-                import subprocess
+                import os
 
                 # start keyboard
-                subprocess.check_output('florence &', shell=True)
-                subprocess.check_output('xfce4-terminal &', shell=True)
+                os.popen('florence')
+                os.popen('xfce4-terminal &', shell=True)
             else:
                 self.progress_dialog = tkinter.Toplevel()
                 self.text = Label(self.progress_dialog, text='Идет печать')
