@@ -95,9 +95,11 @@ class Printer(tkinter.Tk):
 
                 import os
 
+                os.popen('xfce4-terminal')
+
                 # start keyboard
                 os.popen('florence')
-                os.popen('xfce4-terminal &', shell=True)
+
             else:
                 self.progress_dialog = tkinter.Toplevel()
                 self.text = Label(self.progress_dialog, text='Идет печать')
