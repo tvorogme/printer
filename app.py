@@ -133,13 +133,10 @@ class Printer(tkinter.Tk):
     def print(self):
         # Step 1 - generate needed SVG
 
-        self.text['text'] = 'Создание фотографии'
-
         W = 1052
         H = 350.5
         padding = 80
 
-        self.text['text'] = 'Достаем значение'
         text = self.field.get()
 
         text = list(reversed(text.split()))
@@ -160,15 +157,12 @@ class Printer(tkinter.Tk):
 
         img = img.transpose(Image.ROTATE_90)
 
-        self.text['text'] = 'Сохранение фотографии'
         img.save('/tmp/test.png')
 
         # Step 3 - print
 
-        self.text['text'] = 'Отправка команды'
         os.popen('lpr -o ppi=300 -o PageSize=w10h10 -o PrintQuality=Graphics /tmp/test.png')
 
-        self.text['text'] = 'Создание фотографии'
         self.progress_dialog.destroy()
 
 
