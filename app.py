@@ -23,6 +23,8 @@ class Printer(tkinter.Tk):
         self.draw_keyboard()
         self.change()
 
+        self.text = None
+
     def draw_keyboard(self):
         cur_row = 2
         cur_column = 0
@@ -74,6 +76,10 @@ class Printer(tkinter.Tk):
         if value == "СТЕРЕТЬ":
             self.field.delete(len(self.field.get()) - 1, tkinter.END)
 
+            if len(self.field.get()) == 0:
+                self.field.insert(tkinter.END, 'Фамилия Имя')
+                self.change()
+                
         elif value == "ПРОБЕЛ":
             self.field.insert(tkinter.END, ' ')
             self.change()
@@ -83,8 +89,8 @@ class Printer(tkinter.Tk):
 
         elif value == 'ПЕЧАТЬ':
             self.progress_dialog = tkinter.Toplevel()
-            text = Label(self.progress_dialog, text='Идет печать')
-            text.pack()
+            self.text = Label(self.progress_dialog, text='Идет печать')
+            self.text.pack()
 
             self.print()
 
@@ -96,6 +102,10 @@ class Printer(tkinter.Tk):
                 self.field.delete(0, tkinter.END)
 
             if self.field.get() == 'слизерин':
+                self.progress_dialog = tkinter.Toplevel()
+                text = Label(self.progress_dialog, text='Добро пожаловать')
+                text.pack()
+
                 import subprocess
 
                 # start keyboard
