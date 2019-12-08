@@ -1,4 +1,4 @@
-import subprocess
+import os
 import tkinter
 from tkinter import font, Entry, Label
 
@@ -133,6 +133,8 @@ class Printer(tkinter.Tk):
     def print(self):
         # Step 1 - generate needed SVG
 
+        self.text['text'] = 'Создание фотографии'
+
         W = 1052
         H = 308
         padding = 80
@@ -154,12 +156,15 @@ class Printer(tkinter.Tk):
 
         img = img.transpose(Image.ROTATE_90)
 
-        img.save('test.png')
+        self.text['text'] = 'Сохранение фотографии'
+        img.save('/tmp/test.png')
 
         # Step 3 - print
 
-        subprocess.check_output('lpr -o ppi=300 -o PageSize=w10h10 -o PrintQuality=Graphics test.png', shell=True)
+        self.text['text'] = 'Отправка команды'
+        os.popen('lpr -o ppi=300 -o PageSize=w10h10 -o PrintQuality=Graphics /tmp/test.png')
 
+        self.text['text'] = 'Создание фотографии'
         self.progress_dialog.destroy()
 
 
