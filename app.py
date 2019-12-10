@@ -114,7 +114,6 @@ class Printer(tkinter.Tk):
             if self.field.get() == default:
                 self.field.delete(0, tkinter.END)
 
-
             self.field.insert(tkinter.END, value if not self.upper else value.upper())
 
             if self.upper:
@@ -154,6 +153,12 @@ class Printer(tkinter.Tk):
             w, h = d.textsize(phrase, font=font)
             d.text(((W - w) / 2, ((H - h) / 2 + len(text) * padding / 2) - (padding * i)), phrase, font=font,
                    fill=(0, 0, 0))
+
+        logo = Image.open('logo.png', 'r')
+        maxsize = (logo.size[0] // 4, logo.size[1] // 4)
+        logo.thumbnail(maxsize, Image.ANTIALIAS)
+
+        img.paste(logo, (img.size[0] - logo.size[0], 0), logo)
 
         img = img.transpose(Image.ROTATE_90)
 
