@@ -158,7 +158,7 @@ class Printer(tkinter.Tk):
         maxsize = (logo.size[0] // 4, logo.size[1] // 4)
         logo.thumbnail(maxsize, Image.ANTIALIAS)
 
-        img.paste(logo, (0, 0), logo)
+        img.paste(logo, (50, 0), logo)
 
         img = img.transpose(Image.ROTATE_90)
 
