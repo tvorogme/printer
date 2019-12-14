@@ -82,7 +82,9 @@ class Printer(tkinter.Tk):
 
         elif value == "ПРОБЕЛ":
             self.field.insert(tkinter.END, ' ')
-            self.change()
+
+            if not self.upper:
+                self.change()
 
         elif value == 'ЗАГЛАВН':
             self.change()
@@ -124,6 +126,7 @@ class Printer(tkinter.Tk):
             method = 'lower'
         else:
             method = 'upper'
+
         for i in range(34):
             self.buttons[i]["text"] = getattr(self.buttons[i]["text"], method)()
 
@@ -169,6 +172,9 @@ class Printer(tkinter.Tk):
         os.popen('lpr -o ppi=300 -o PageSize=w10h10 -o PrintQuality=Graphics /tmp/test.png')
 
         self.progress_dialog.destroy()
+
+        if not self.upper:
+            self.change()
 
 
 if __name__ == '__main__':
